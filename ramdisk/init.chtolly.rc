@@ -1,0 +1,17 @@
+# Chtolly Kernel init script
+# by krasCGQ @ xda-developers
+
+on boot
+    # Enable msm_thermal
+    write /sys/module/msm_thermal/parameters/enabled Y
+
+    # Force scheduler requests to be completed on the core they made
+    write /sys/block/mmcblk0/queue/rq_affinity 2
+    write /sys/block/mmcblk1/queue/rq_affinity 2
+
+service chtolly-init /init.chtolly.sh
+    class main
+    user root
+    group root
+    seclabel u:r:init:s0
+    oneshot
