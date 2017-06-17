@@ -42,7 +42,10 @@ if [ $? != 0 -o -z "$(ls /tmp/anykernel/tools)" ]; then
   abort "Unzip failed. Aborting...";
 fi;
 chmod -R 755 /tmp/anykernel/tools /tmp/anykernel/bin;
-bb=/tmp/anykernel/tools/busybox;
+test -f /sbin/busybox && bb=/sbin/busybox;
+if [ -z "$bb" ]; then
+  bb=/tmp/anykernel/tools/busybox;
+fi;
 
 ui_print "$(file_getprop /tmp/anykernel/anykernel.sh kernel.string)";
 ui_print " ";
@@ -69,13 +72,16 @@ if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.devicecheck)" == 1 ]; then
 fi;
 
 ui_print "Installing kernel...";
-for i in $($bb --list); do
-  $bb ln -s $bb /tmp/anykernel/bin/$i;
-done;
-if [ $? != 0 -o -z "$(ls /tmp/anykernel/bin)" ]; then
-  abort "Recovery busybox setup failed. Aborting...";
+if [ "$bb" == "/tmp/anykernel/tools/busybox" ]; then
+  for i in $($bb --list); do
+    $bb ln -s $bb /tmp/anykernel/bin/$i;
+  done;
+  if [ $? != 0 -o -z "$(ls /tmp/anykernel/bin)" ]; then
+    abort "Recovery busybox setup failed. Aborting...";
+  fi;
+  bb="PATH=/tmp/anykernel/bin:$PATH $bb";
 fi;
-PATH="/tmp/anykernel/bin:$PATH" $bb ash /tmp/anykernel/anykernel.sh $2;
+$bb ash /tmp/anykernel/anykernel.sh $2;
 if [ $? != "0" ]; then
   abort;
 fi;
