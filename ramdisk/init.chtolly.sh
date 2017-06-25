@@ -4,6 +4,10 @@
 # Chtolly Kernel init script
 # by krasCGQ @ xda-developers
 
+# Go permissive for now
+# Avoid SELinux denials during script execution
+setenforce 0;
+
 # Unset BusyBox variable (IMPORTANT!)
 unset BB;
 
@@ -59,8 +63,8 @@ fi;
 mount -t rootfs -o ro,remount rootfs;
 mount -o ro,remount -t auto /system;
 
-# Sleep for 30 seconds (duh!)
-sleep 30;
+# Sleep for 5 seconds
+sleep 5;
 
 # Google Play services wakelock fix (requires su)
 su -c "pm enable com.google.android.gms/.update.SystemUpdateActivity"
@@ -73,5 +77,8 @@ su -c "pm enable com.google.android.gsf/.update.SystemUpdatePanoActivity"
 su -c "pm enable com.google.android.gsf/.update.SystemUpdateService"
 su -c "pm enable com.google.android.gsf/.update.SystemUpdateService$Receiver"
 su -c "pm enable com.google.android.gsf/.update.SystemUpdateService$SecretCodeReceiver"
+
+# Go enforcing
+setenforce 1;
 
 exit 0;
