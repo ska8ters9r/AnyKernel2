@@ -32,12 +32,12 @@ dump_boot;
 
 # Backup all original files before applying changes
 backup_file init.rc;
+backup_file init.qcom.rc;
 backup_file init.qcom.power.rc;
 
 # Applying changes
 # Import Chtolly Kernel init scripts
-insert_line init.rc 'Chtolly' before 'on early-init' '# Import Chtolly Kernel init scripts';
-insert_line init.rc 'init.chtolly.rc' after '# Import Chtolly Kernel init scripts' 'import /init.chtolly.rc';
+insert_line init.qcom.rc 'init.chtolly.rc' after 'import init.qcom.usb.rc' 'import init.chtolly.rc';
 
 # Also use exact permissions for powersave cluster
 insert_line init.rc 'chown system system /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq' after '    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq' '    chown system system /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq';
