@@ -24,9 +24,26 @@ on boot
     write /sys/block/mmcblk0/queue/rq_affinity 2
     write /sys/block/mmcblk1/queue/rq_affinity 2
 
-service chtolly-init /init.chtolly.sh
+on enable-low-power
+    # Adaptive LMK
+    write /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk 1
+    write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 81250
+
+    # Per-process reclaim
+    write /sys/module/process_reclaim/parameters/enable_process_reclaim 1
+    write /sys/module/process_reclaim/parameters/pressure_min 10
+    write /sys/module/process_reclaim/parameters/per_swap_size 1024
+    write /sys/module/process_reclaim/parameters/pressure_max 70
+    write /sys/module/process_reclaim/parameters/swap_opt_eff 30
+
+service chtolly-init /init.chtolly.main.sh
     class main
     user root
     group root
     seclabel u:r:init:s0
+    oneshot
+
+service chtolly-lmk /init.chtolly.lmk.sh
+    class late_start
+    user root
     oneshot
