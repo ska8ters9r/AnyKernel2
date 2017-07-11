@@ -36,14 +36,14 @@ on enable-low-power
     write /sys/module/process_reclaim/parameters/pressure_max 70
     write /sys/module/process_reclaim/parameters/swap_opt_eff 30
 
-service chtolly-init /init.chtolly.main.sh
+service chtolly-init /system/bin/sh /init.chtolly.main.sh
     class main
     user root
     group root
     seclabel u:r:init:s0
     oneshot
 
-service chtolly-lmk /init.chtolly.lmk.sh
+service chtolly-lmk /system/bin/sh /init.chtolly.lmk.sh
     class late_start
     user root
     oneshot
