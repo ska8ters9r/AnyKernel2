@@ -22,8 +22,10 @@ is_slot_device=0;
 
 ## AnyKernel permissions
 # set permissions for included ramdisk files
-chmod -R 755 $ramdisk;
-chmod 755 $ramdisk/init.chtolly.sh;
+chmod 750 $ramdisk/init.chtolly.rc;
+chmod 755 $ramdisk/init.chtolly.main.sh;
+chmod 755 $ramdisk/init.chtolly.lmk.sh;
+chmod 755 $ramdisk/sbin/busybox;
 
 ## AnyKernel install
 dump_boot;
