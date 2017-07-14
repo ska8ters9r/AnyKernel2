@@ -73,6 +73,9 @@ remove_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu4/core_ctl/
 remove_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu4/core_ctl/offline_delay_ms 5000';
 remove_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu4/core_ctl/not_preferred 1';
 
+# powersave to ondemand
+replace_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "powersave"' '    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "ondemand"'
+
 # end ramdisk changes
 
 write_boot;
