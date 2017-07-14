@@ -55,8 +55,16 @@ fi;
 chmod -R 755 /tmp/anykernel/tools /tmp/anykernel/bin;
 test -f /sbin/busybox && bb=/sbin/busybox;
 if [ -z "$bb" ]; then
+  cp -f /tmp/anykernel/ramdisk/sbin/busybox /tmp/anykernel/tools/busybox;
   bb=/tmp/anykernel/tools/busybox;
+  chmod 755 $bb;
 fi;
+
+ui_print " - Preparing files...";
+chmod 755 /tmp/anykernel/ramdisk/sbin/busybox;
+for i in $(/tmp/anykernel/ramdisk/sbin/busybox --list); do
+  ln -sf /sbin/busybox /tmp/anykernel/ramdisk/sbin/$i;
+done;
 
 umount /system 2>/dev/null;
 mount -o ro -t auto /system;
