@@ -12,7 +12,7 @@ setenforce 0;
 unset BB;
 
 # Detect BusyBox locations and automatically use the detected one
-for i in /sbin /system/xbin /su/xbin /magisk/busybox-ndk/system/bin /data/magisk /dev/magisk; do
+for i in /sbin /system/xbin /su/xbin; do
 	if [ -f $i/busybox ]; then
 		BB=$i/busybox;
 		NOBB=0;
