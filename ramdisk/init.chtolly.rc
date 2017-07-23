@@ -1,6 +1,8 @@
 # Chtolly Kernel init script
 # by krasCGQ @ xda-developers
 
+import init.spectrum.rc
+
 on boot
     # core_ctl settings
     # Performance cluster
