@@ -76,6 +76,10 @@ remove_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu4/core_ctl/
 # powersave to ondemand
 replace_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "powersave"' '    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "ondemand"'
 
+# Conflicts with default I/O scheduler settings that Spectrum has to set on boot
+remove_line init.qcom.power.rc 'on property:dev.bootcomplete=1';
+remove_line init.qcom.power.rc '    setprop sys.io.scheduler "bfq"';
+
 # end ramdisk changes
 
 write_boot;
