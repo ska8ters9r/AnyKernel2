@@ -59,19 +59,11 @@ insert_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu4/cpufreq/s
 replace_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads "1 960000:85 1113600:90 1344000:80"' '    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads "75 960000:85 1113600:90 1344000:80"';
 replace_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/target_loads "1 800000:90"' '    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/target_loads "80 800000:90"';
 
-# RIP core_ctl
-remove_line init.qcom.power.rc '    # Enable core control';
-remove_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu0/core_ctl/min_cpus 0';
-remove_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu0/core_ctl/max_cpus 4';
-remove_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres 68';
-remove_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres 40';
-remove_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu0/core_ctl/offline_delay_ms 100';
-remove_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu0/core_ctl/task_thres 4';
-remove_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu0/core_ctl/is_big_cluster 1';
-remove_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu4/core_ctl/busy_up_thres 20';
-remove_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu4/core_ctl/busy_down_thres 5';
+# core_ctl tweaks
+replace_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu4/core_ctl/busy_up_thres 20' '    write /sys/devices/system/cpu/cpu4/core_ctl/min_cpus 4';
+replace_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu4/core_ctl/busy_down_thres 5' '    write /sys/devices/system/cpu/cpu4/core_ctl/max_cpus 4';
 remove_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu4/core_ctl/offline_delay_ms 5000';
-remove_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu4/core_ctl/not_preferred 1';
+insert_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu4/core_ctl/disable 1' after '    write /sys/devices/system/cpu/cpu4/core_ctl/not_preferred 1' '    write /sys/devices/system/cpu/cpu4/core_ctl/disable 1';
 
 # powersave to ondemand
 replace_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "powersave"' '    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "ondemand"'
