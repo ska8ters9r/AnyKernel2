@@ -51,8 +51,8 @@ replace_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu4/cpufreq/
 replace_line init.qcom.power.rc '    setprop ro.min_freq_0 960000' '    setprop ro.min_freq_0 200000';
 replace_line init.qcom.power.rc '    setprop ro.min_freq_4 800000' '    setprop ro.min_freq_4 200000';
 
-# Limit maximum frequency to 800 MHz on both clusters
-insert_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 800000' after '    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 200000' '    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 800000';
+# Tweak maximum frequency on both clusters
+insert_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 960000' after '    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 200000' '    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 960000';
 insert_line init.qcom.power.rc '    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq 800000' after '    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 200000' '    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq 800000';
 
 # Interactive tweaks
