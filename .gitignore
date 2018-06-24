@@ -1,3 +1,4 @@
 build.sh
-Image.gz-dtb
+kernel/Image.gz
+*/msm8953-qrd-sku3-mido.dtb
 *.zip
