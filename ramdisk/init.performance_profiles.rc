@@ -1,0 +1,14 @@
+# Performance Profiles support for Franco Kernel Manager
+# Copyright (C) 2018 KudProject Development
+
+# Power saving
+on property:fku.perf.profile=0
+    # Reserved
+
+# Balanced (FK defaults)
+on property:fku.perf.profile=1
+    # Reserved
+
+# Performance
+on property:fku.perf.profile=2
+    # Reserved
