@@ -20,24 +20,8 @@ on property:sys.boot_completed=1
 
 # Must be executed after qcom-post-boot
 on property:init.svc.qcom-post-boot=stopped
-    # If the selected governor is valid, apply tunables
-    setprop sys.cpufreq.governor ${persist.sys.cpufreq.governor}
-
     # Reduce maxfreq to 1804 MHz (originally was 1689 MHz)
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1804800
 
     # Set read ahead to 128 kb for external storage (rest are handled by qcom-post-boot)
     write /sys/block/mmcblk1/queue/read_ahead_kb 128
-
-# clarity CPUFreq governor
-on property:sys.cpufreq.governor=clarity
-    # Apply (most of) interactive tunables to clarity
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor clarity
-    write /sys/devices/system/cpu/cpufreq/clarity/above_hispeed_delay "19000 1401600:39000"
-    write /sys/devices/system/cpu/cpufreq/clarity/go_hispeed_load 85
-    write /sys/devices/system/cpu/cpufreq/clarity/hispeed_freq 1401600
-    write /sys/devices/system/cpu/cpufreq/clarity/target_loads "85 1401600:80"
-    write /sys/devices/system/cpu/cpufreq/clarity/min_sample_time 39000
-
-    # Set screen off maxfreq to 1036 MHz instead of staying on invalid value
-    write /sys/devices/system/cpu/cpufreq/clarity/suspend_max_freq 1036800
